@@ -20,13 +20,13 @@ public class Problem2 {
         double total = 0;
         String totalOutput = "";
         //TODO add/edit code here
-       for(int i=0;i<arr.length;i++){
+       for(int i=0;i<arr.length;i++){ //add to total
         total+=arr[i];
        }
        
         //set the double to a string variable
         totalOutput = total+"";
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat df = new DecimalFormat("0.00"); //change decimal gbj3 IT114-008
         totalOutput = df.format(total);
         //end add/edit section
         System.out.println("Total is " + totalOutput);

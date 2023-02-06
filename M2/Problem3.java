@@ -14,7 +14,7 @@ public class Problem3 {
         bePositive(a3);
         bePositive(a4);
     }
-    static <T> void bePositive(T[] arr){
+    static <T> void bePositive(T[] arr){ //gbj3 IT-114
         System.out.println("Processing Array:" + Arrays.toString(arr));
         //your code should set the indexes of this array
         Object[] output = new Object[arr.length];
