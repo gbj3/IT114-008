@@ -1,3 +1,5 @@
+package M2;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Problem1 {
@@ -17,7 +19,12 @@ public class Problem1 {
         System.out.println("Processing Array:" + Arrays.toString(arr));
         System.out.println("Odds output:");
         //TODO add/edit code here
-        
+        int x= arr.length;
+        for(int i=0;i<x;i++){
+            if((arr[i]%2) != 0) { //check to see if divisible;; gbj3 IT114-008
+                System.out.println(arr[i]);
+            }
+        }
         //end add/edit section
         System.out.println();
         System.out.println("End process");
