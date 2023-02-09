@@ -72,6 +72,7 @@ public class NumberGuesser4 {
 			e2.printStackTrace();
 		}
         System.out.println("Loaded state");
+        difficulty();
 	int range = 10 + ((level - 1) * 5);
         System.out.println("Welcome to level " + level);
         System.out.println(
@@ -118,6 +119,30 @@ public class NumberGuesser4 {
         }
     }
 
+    private void difficulty() { //gbj3 IT114-008 2/9/2023
+
+        final String level1 = "easy";
+        final String level2 = "medium";
+        final String level3 = "hard";
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Choose a difficulty \n 1: Easy \n 2: Medium \n 3: Hard");
+        String diff = scan.nextLine();
+        if (diff.equalsIgnoreCase(level1)) {
+            maxStrikes = 10;
+        }
+        else if (diff.equalsIgnoreCase(level2)) {
+            maxStrikes = 5;
+        }
+        else if (diff.equalsIgnoreCase(level3)) {
+            maxStrikes = 3;
+        }
+        else {
+            difficulty();
+        }
+
+
+    }
+
     private void processGuess(int guess) {
         if (guess < 0) {
             return;
@@ -132,6 +157,13 @@ public class NumberGuesser4 {
             if (strikes >= maxStrikes) {
                 lose();
                 pickNewRandom = true;
+            }
+
+            if (guess > number) { //gbj3 IT114-008 2/9/2023
+                System.out.println("Too high!"); //gives a hint whether they are higher or lower
+            }
+            else {
+                System.out.println("Too low!");
             }
         }
     }
@@ -158,6 +190,7 @@ public class NumberGuesser4 {
                     generateNewNumber(level);
                     saveState();
                     pickNewRandom = false;
+                    difficulty(); //calls difficulty method
                 }
                 System.out.println("Type a number and press enter");
                 //we'll want to use a local variable here
