@@ -220,27 +220,27 @@ public enum Server {
         }
     }
 
-    public static boolean processCommand(String message) {
+    public static boolean processCommand(String message) {//gbj3 IT114-008 4/5
         System.out.println("Checking command: " + message);
         // TODO
-        if (message.startsWith("/flip")) {
-            boolean result = Math.random() < 0.5;
+        if (message.startsWith("/flip")) { //checks to see if flip is in message
+            boolean result = Math.random() < 0.5; //boolean if less then heads, more then tails
             broadcast("The room landed on " + (result ? "heads" : "tails"));
         }
-        else if (message.startsWith("/roll")) {
-            String[] str = message.split(" ");
+        else if (message.startsWith("/roll")) {//checks for roll in message
+            String[] str = message.split(" "); //split in array
             try {
-                Integer.parseInt(str[1]);
+                Integer.parseInt(str[1]); //try to parse if it can, continue
                 int num = Integer.parseInt(str[1]);
-                int result = (int)(Math.random() * num)+1;
+                int result = (int)(Math.random() * num)+1; //random * # of sides
                 broadcast("You rolled " + result);
             }
             catch (Exception e) {
-                String[] parts = str[1].split("d");
+                String[] parts = str[1].split("d"); //split by d
                 int dice = Integer.parseInt(parts[0]);
                 int sides = Integer.parseInt(parts[1]);
                 int total = 0;
-                for (int i=0; i<dice; i++) {
+                for (int i=0; i<dice; i++) { //loop based on num of dice
                     total += (int)(Math.random() * sides + 1);
                 }
                 broadcast("You rolled " + total);
@@ -263,7 +263,7 @@ public enum Server {
     }
 
 
-    public static String processMessage(String message) {
+    public static String processMessage(String message) { // gbj3 IT114 4/5
         List<String> boldTags = new ArrayList<>();
         List<String> italicTags = new ArrayList<>();
         List<String> underlineTags = new ArrayList<>();
@@ -281,23 +281,23 @@ public enum Server {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
     
-            if (!insideRedTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '%') {
+            if (!insideRedTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '%') { //looks for open indicators for red
                 insideRedTag = true;
-                redTags.add("<span style=\"color:red\">");
+                redTags.add("<span style=\"color:red\">"); //adds tags
                 i++; 
-            } else if (insideRedTag && i + 1 < message.length() && c == '%' && message.charAt(i + 1) == '*') {
+            } else if (insideRedTag && i + 1 < message.length() && c == '%' && message.charAt(i + 1) == '*') {//looks for close indicators for red 
                 insideRedTag = false;
                 redTags.add("</span>");
                 i++; 
-            } else if (!insideGreenTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '$') {
+            } else if (!insideGreenTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '$') {//looks for open indicators for green
                 insideGreenTag = true;
                 greenTags.add("<span style=\"color:green\">");
                 i++; 
-            } else if (insideGreenTag && i + 1 < message.length() && c == '$' && message.charAt(i + 1) == '*') {
+            } else if (insideGreenTag && i + 1 < message.length() && c == '$' && message.charAt(i + 1) == '*') {//looks for close indicators for green
                 insideGreenTag = false;
                 greenTags.add("</span>");
                 i++; 
-            } else if (!insideBlueTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '^') {
+            } else if (!insideBlueTag && i + 1 < message.length() && c == '*' && message.charAt(i + 1) == '^') { //gbj3
                 insideBlueTag = true;
                 blueTags.add("<span style=\"color:blue\">");
                 i++; 
@@ -335,7 +335,7 @@ public enum Server {
                 i++; 
             } else {
                 if (insideBoldTag) {
-                    boldTags.add(Character.toString(c));
+                    boldTags.add(Character.toString(c)); //concatinates into string
                 } else if (insideItalicTag) {
                     italicTags.add(Character.toString(c));
                 } else if (insideUnderlineTag) {
@@ -347,7 +347,7 @@ public enum Server {
                 } else if (insideBlueTag) {
                     blueTags.add(Character.toString(c));
                 }else {
-                    processedMessage += c;
+                    processedMessage += c; //if no indicators found
                 }
             }
         }
@@ -370,11 +370,8 @@ public enum Server {
         if (insideBlueTag) {
             redTags.add("</span>");
         }
-    
+        //returns output
         return String.join("", underlineTags) + String.join("", italicTags) + String.join("", boldTags) + String.join("", redTags) + String.join("", greenTags) +String.join("", blueTags) + processedMessage;
     }
-    
-    
-
 }
 
