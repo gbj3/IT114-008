@@ -309,6 +309,7 @@ public enum Server {
                 insideUnderlineTag = true;
                 underlineTags.add("<u>");
                 i++; 
+                processMessage(processedMessage);
             } else if (insideUnderlineTag && i + 1 < message.length() && c == '_' && message.charAt(i + 1) == '*') {
                 insideUnderlineTag = false;
                 underlineTags.add("</u>");
@@ -318,6 +319,8 @@ public enum Server {
                 insideBoldTag = true;
                 boldTags.add("<b>");
                 i++; 
+                processMessage(processedMessage);
+
             } else if (insideBoldTag && i + 1 < message.length() &&
                     c == '!' && message.charAt(i + 1) == '*') {
                 insideBoldTag = false;
@@ -328,6 +331,8 @@ public enum Server {
                 insideItalicTag = true;
                 italicTags.add("<i>");
                 i++; 
+                processMessage(processedMessage);
+
             } else if (insideItalicTag && i + 1 < message.length() &&
                     c == '-' && message.charAt(i + 1) == '*') {
                 insideItalicTag = false;
