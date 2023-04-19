@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 import Project.common.Constants;
 import Project.common.Payload;
@@ -27,6 +29,31 @@ public class ServerThread extends Thread {
     private static Logger logger = Logger.getLogger(ServerThread.class.getName());
     private long myClientId;
     private String sender;
+
+    List<String> mutedClients = new ArrayList<String>(); //gbj3 IT114
+
+    public List<String> getMutedClients() {
+        return this.mutedClients;
+    }
+
+    public void mute(String name) {
+        name = name.trim().toLowerCase();
+        if (!isMuted(name)) {
+            mutedClients.add(name);
+        }
+    }
+
+    public void unmute(String name) {
+        name = name.trim().toLowerCase();
+        if(isMuted(name)) {
+            mutedClients.remove(name);
+        }
+    }
+
+    public boolean isMuted(String name) {
+        name = name.trim().toLowerCase();
+        return mutedClients.contains(name);
+    }
 
     public void setClientId(long id) {
         myClientId = id;

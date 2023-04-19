@@ -64,7 +64,7 @@ public class ChatPanel extends JPanel {
         textValue.addKeyListener(new KeyListener() {
 
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(KeyEvent e) { //gbj3 IT114
 
             }
 

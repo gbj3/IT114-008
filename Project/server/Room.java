@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 import Project.server.Server;
 
 import Project.common.Constants;
@@ -15,6 +16,7 @@ public class Room implements AutoCloseable {
     private String name;
     private List<ServerThread> clients = new ArrayList<ServerThread>();
     private boolean isRunning = false;
+    private final static Logger log = Logger.getLogger(Room.class.getName());
     // Commands
     private final static String COMMAND_TRIGGER = "/";
     private final static String CREATE_ROOM = "createroom";
@@ -25,6 +27,8 @@ public class Room implements AutoCloseable {
     private static Logger logger = Logger.getLogger(Room.class.getName());
 	private final static String FLIP = "flip";
 	private final static String ROLL = "roll";
+    private final static String MUTE = "mute";
+    private final static String UNMUTE = "unmute";
 
     public Room(String name) {
         this.name = name;
@@ -125,6 +129,30 @@ public class Room implements AutoCloseable {
 					case ROLL:
 						Server.processCommand(message);
 						break;
+                    case MUTE: //gbj3 IT114
+                        String[] muted = comm2[1].split(", ");
+                        List<String> muteList = new ArrayList<String>();
+                        for (String user : muted) {
+                            if (!client.isMuted(user)) {
+                                client.mute(user);
+                                muteList.add(user);
+                            }
+                        }
+                        sendPrivateMessage(client, "muted you", muteList);
+                        wasCommand = true;
+                        break;
+                    case UNMUTE:
+                        String[] unmuted = comm2[1].split(", ");
+                        List<String> unmuteList = new ArrayList<String>();
+                        for (String user : unmuted) {
+                            if (client.isMuted(user)) {
+                                client.unmute(user);
+                                unmuteList.add(user);
+                            }
+                        }
+                        sendPrivateMessage(client, "unmuted you", unmuteList);
+                        wasCommand = true;
+                        break;
                     case CREATE_ROOM:
                         roomName = comm2[1];
                         Room.createRoom(roomName, client);
@@ -191,7 +219,7 @@ public class Room implements AutoCloseable {
      * @param sender  The client sending the message
      * @param message The message to broadcast inside the room
      */
-    protected synchronized void sendMessage(ServerThread sender, String message) {
+    protected synchronized void sendMessage(ServerThread sender, String message) { //gbj3 IT114
         if (!isRunning) {
             return;
         }
@@ -204,10 +232,28 @@ public class Room implements AutoCloseable {
         Iterator<ServerThread> iter = clients.iterator();
         while (iter.hasNext()) {
             ServerThread client = iter.next();
-			Server.processMessage(message);
-            boolean messageSent = client.sendMessage(from, Server.processMessage(message));
-            if (!messageSent) {
-                handleDisconnect(iter, client);
+            if(!client.isMuted(sender.getClientName())) {
+                boolean messageSent = client.sendMessage(from, Server.processMessage(message));
+                if (!messageSent) {
+                    handleDisconnect(iter, client);
+                }
+            }
+        }
+    }
+    protected void sendPrivateMessage(ServerThread sender, String message, List<String> users) {
+        log.log(Level.INFO, getName() + ": Sending a message to " + users.size() + " clients");
+        if (processCommands(message, sender)) {
+            return;
+        }
+        Iterator<ServerThread> iter = clients.iterator();
+        long from = sender == null ? Constants.DEFAULT_CLIENT_ID : sender.getClientId();
+        while (iter.hasNext()) {
+            ServerThread client = iter.next();
+            if(!client.isMuted(sender.getClientName())) {
+                boolean messageSent = client.sendMessage(from, Server.processMessage(message));
+                if (!messageSent) {
+                    handleDisconnect(iter, client);
+                }
             }
         }
     }
