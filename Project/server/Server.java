@@ -223,11 +223,8 @@ public enum Server {
     public static boolean processCommand(String message) {//gbj3 IT114-008 4/5
         System.out.println("Checking command: " + message);
         // TODO
-        if (message.startsWith("/flip")) { //checks to see if flip is in message
-            boolean result = Math.random() < 0.5; //boolean if less then heads, more then tails
-            broadcast("The room landed on " + (result ? "heads" : "tails"));
-        }
-        else if (message.startsWith("/roll")) {//checks for roll in message
+
+         if (message.startsWith("/roll")) {//checks for roll in message
             String[] str = message.split(" "); //split in array
             try {
                 Integer.parseInt(str[1]); //try to parse if it can, continue
@@ -309,6 +306,7 @@ public enum Server {
                 insideUnderlineTag = true;
                 underlineTags.add("<u>");
                 i++; 
+                processMessage(processedMessage);
             } else if (insideUnderlineTag && i + 1 < message.length() && c == '_' && message.charAt(i + 1) == '*') {
                 insideUnderlineTag = false;
                 underlineTags.add("</u>");
@@ -318,6 +316,8 @@ public enum Server {
                 insideBoldTag = true;
                 boldTags.add("<b>");
                 i++; 
+                processMessage(processedMessage);
+
             } else if (insideBoldTag && i + 1 < message.length() &&
                     c == '!' && message.charAt(i + 1) == '*') {
                 insideBoldTag = false;
@@ -328,6 +328,8 @@ public enum Server {
                 insideItalicTag = true;
                 italicTags.add("<i>");
                 i++; 
+                processMessage(processedMessage);
+
             } else if (insideItalicTag && i + 1 < message.length() &&
                     c == '-' && message.charAt(i + 1) == '*') {
                 insideItalicTag = false;
