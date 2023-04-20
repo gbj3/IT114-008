@@ -115,6 +115,37 @@ public class ServerThread extends Thread {
     }
 
     // send methods
+    @Deprecated
+    protected boolean send(String message) {
+     // added a boolean so we can see if the send was successful
+     try {
+         out.writeObject(message);
+         return true;
+     }
+     catch (IOException e) {
+         logger.log(Level.INFO, "Error sending message to client (most likely disconnected)");
+         e.printStackTrace();
+         cleanup();
+         return false;
+     }
+    }
+
+     /***
+      * Replacement for send(message) that takes the client name and message and
+      * converts it into a payload
+      * 
+      * @param clientName
+      * @param message
+      * @return
+      */
+    protected boolean send(String clientName, String message) {
+     Payload payload = new Payload();
+     payload.setPayloadType(PayloadType.MESSAGE);
+     payload.setClientName(clientName);
+     payload.setMessage(message);
+
+     return send(payload);
+    }
 
     public boolean sendReadyStatus(long clientId) {
         Payload p = new Payload();

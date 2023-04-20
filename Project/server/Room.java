@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import Project.server.Server;
+import java.util.Random;
 
 import Project.common.Constants;
 
@@ -102,6 +103,35 @@ public class Room implements AutoCloseable {
             close();
         }
     }
+    Random rand = new Random();
+    protected synchronized void roll(ServerThread client, String message) { //gbj3 IT114
+        String[] str = message.split(" "); //split in array
+            try {
+                Integer.parseInt(str[1]); //try to parse if it can, continue
+                int num = Integer.parseInt(str[1]);
+                int result = (int)(Math.random() * num)+1; //random * # of sides
+                sendMessage(client, "<b> rolled " + result + "</b>");
+            }
+            catch (Exception e) {
+                String[] parts = str[1].split("d"); //split by d
+                int dice = Integer.parseInt(parts[0]);
+                int sides = Integer.parseInt(parts[1]);
+                int total = 0;
+                for (int i=0; i<dice; i++) { //loop based on num of dice
+                    total += (int)(Math.random() * sides + 1);
+                }
+                sendMessage(client, "<b> rolled " + total + "</b>"); }
+            }
+
+    protected synchronized void flip(ServerThread client) {
+        int result = rand.nextInt(2); //will generate between 0/1
+        String message;
+        if(result == 0)
+            message = " flipped heads";
+        else 
+            message = " flipped tails";
+        sendMessage(client, "<b>" + message + "</b>");
+    }
 
     /***
      * Helper function to process messages to trigger different functionality.
@@ -124,10 +154,11 @@ public class Room implements AutoCloseable {
                 wasCommand = true;
                 switch (command) {
 					case FLIP:
-						Server.processCommand(message);
-						break;
+                    flip(client);
+                    wasCommand = true;
+                    break;
 					case ROLL:
-						Server.processCommand(message);
+						roll(client, message);
 						break;
                     case MUTE: //gbj3 IT114
                         String[] muted = comm2[1].split(", ");
@@ -138,7 +169,7 @@ public class Room implements AutoCloseable {
                                 muteList.add(user);
                             }
                         }
-                        sendPrivateMessage(client, "muted you", muteList);
+                        
                         wasCommand = true;
                         break;
                     case UNMUTE:
@@ -150,7 +181,6 @@ public class Room implements AutoCloseable {
                                 unmuteList.add(user);
                             }
                         }
-                        sendPrivateMessage(client, "unmuted you", unmuteList);
                         wasCommand = true;
                         break;
                     case CREATE_ROOM:
@@ -171,6 +201,31 @@ public class Room implements AutoCloseable {
                         break;
                 }
             }
+            else if (message.indexOf("@") > -1) { //gbj3 IT114
+                String command = "";
+                String[] comm = message.split("@");
+                String part1 = comm[1];
+                String[] comm2 = part1.split(" @");
+                List<String> users = new ArrayList<String>();
+                // get list of intended users 
+                for (String user : comm2) {
+                    if(!user.equals(comm2[comm2.length-1])) {
+                        users.add(user.toLowerCase());
+                    }
+                    else {    // get message
+                        String[] pm = user.split(" ", 2);
+                        String last = pm[0];
+                        users.add(last.toLowerCase());
+                        command = pm[1];
+                    }
+                }
+                users.add(client.getClientName());
+                sendPrivateMessage(client, command, users);
+
+                wasCommand = true;
+        }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,7 +286,7 @@ public class Room implements AutoCloseable {
         long from = sender == null ? Constants.DEFAULT_CLIENT_ID : sender.getClientId();
         Iterator<ServerThread> iter = clients.iterator();
         while (iter.hasNext()) {
-            ServerThread client = iter.next();
+            ServerThread client = iter.next();   
             if(!client.isMuted(sender.getClientName())) {
                 boolean messageSent = client.sendMessage(from, Server.processMessage(message));
                 if (!messageSent) {
@@ -240,23 +295,25 @@ public class Room implements AutoCloseable {
             }
         }
     }
-    protected void sendPrivateMessage(ServerThread sender, String message, List<String> users) {
-        log.log(Level.INFO, getName() + ": Sending a message to " + users.size() + " clients");
+    protected void sendPrivateMessage(ServerThread sender, String message, List<String> users) { //gbj3 IT114
         if (processCommands(message, sender)) {
+            // it was a command, don't broadcast
             return;
         }
         Iterator<ServerThread> iter = clients.iterator();
-        long from = sender == null ? Constants.DEFAULT_CLIENT_ID : sender.getClientId();
         while (iter.hasNext()) {
             ServerThread client = iter.next();
-            if(!client.isMuted(sender.getClientName())) {
-                boolean messageSent = client.sendMessage(from, Server.processMessage(message));
-                if (!messageSent) {
-                    handleDisconnect(iter, client);
+                // send message if sender not muted
+            if(users.contains(client.getClientName().toLowerCase())) {
+                if (!client.isMuted(sender.getClientName())){
+                    boolean messageSent = client.send(sender.getClientName(), message);
+                    if (!messageSent) {
+                        iter.remove();
+                    }
                 }
             }
         }
-    }
+        }
 
     protected synchronized void sendConnectionStatus(ServerThread sender, boolean isConnected) {
         Iterator<ServerThread> iter = clients.iterator();
