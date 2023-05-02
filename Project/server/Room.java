@@ -207,7 +207,7 @@ public class Room implements AutoCloseable {
                                 muteList.add(user);
                             }
                         }
-                        
+                        sendPrivateMessage(client," muted you", muteList);
                         wasCommand = true;
                         break;
                     case UNMUTE:
@@ -219,6 +219,7 @@ public class Room implements AutoCloseable {
                                 unmuteList.add(user);
                             }
                         }
+                        sendPrivateMessage(client, " unmuted you", unmuteList);
                         wasCommand = true;
                         break;
                     case CREATE_ROOM:
