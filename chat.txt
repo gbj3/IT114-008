@@ -1,0 +1,104 @@
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *gabe *gabe Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *brian *brian Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *john *john Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: HEY
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *gabe *gabe Joined the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: hey
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *brian *brian Joined the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *brian *brian Left the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *gabe *gabe Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: <b>hey</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: <b>rolled 2</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: <b>rolled 10</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    gabe: <b>flipped heads</b>
+  </body>
+</html>

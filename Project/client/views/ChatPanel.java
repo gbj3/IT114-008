@@ -4,6 +4,7 @@ import java.awt.Adjustable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentAdapter;
@@ -28,12 +29,13 @@ import javax.swing.ScrollPaneConstants;
 
 import Project.client.Card;
 import Project.client.Client;
+import Project.client.ClientUI;
 import Project.client.ClientUtils;
 import Project.client.ICardControls;
 
 public class ChatPanel extends JPanel {
     private static Logger logger = Logger.getLogger(ChatPanel.class.getName());
-    private JPanel chatArea = null;
+    public JPanel chatArea = null;
     private JPanel wrapper = null;
     private UserListPanel userListPanel;
     private Dimension lastSize = new Dimension();
@@ -61,6 +63,14 @@ public class ChatPanel extends JPanel {
         input.add(textValue);
         JButton button = new JButton("Send");
         // lets us submit with the enter key instead of just the button click
+        
+        JButton export = new JButton("Export");
+        export.addActionListener((event)-> {
+            ClientUI.exportChat();
+        });
+        input.add(export);
+        this.add(input, BorderLayout.SOUTH);
+        
         textValue.addKeyListener(new KeyListener() {
 
             @Override

@@ -9,11 +9,15 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Iterator;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -43,7 +47,7 @@ public class ClientUI extends JFrame implements IClientEvents, ICardControls {
     private ConnectionPanel csPanel;
     private UserInputPanel inputPanel;
     private RoomsPanel roomsPanel;
-    private ChatPanel chatPanel;
+    private static ChatPanel chatPanel;
     private GamePanel gamePanel;
 
     public ClientUI(String title) {
@@ -198,6 +202,28 @@ public class ClientUI extends JFrame implements IClientEvents, ICardControls {
         }
     }
 
+    public static void exportChat() {
+        StringBuilder s = new StringBuilder();
+        Component[] comp = chatPanel.chatArea.getComponents();
+        for (Component c : comp) {
+            if (c instanceof JEditorPane) {
+                    JEditorPane j = (JEditorPane) c;
+                    s.append(j.getText());
+            }
+        }
+        try {
+            logger.info("Exporting");
+            FileWriter export = new FileWriter("chat.txt");
+            BufferedWriter bw = new BufferedWriter(export);
+            bw.write(s.toString());
+            bw.close();
+            logger.info(s.toString());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            logger.info("No can do");
+        }
+    }
     @Override
     public void onClientConnect(long clientId, String clientName, String message) {
         if (currentCard.ordinal() >= Card.CHAT.ordinal()) {
@@ -219,6 +245,8 @@ public class ClientUI extends JFrame implements IClientEvents, ICardControls {
         if (currentCard.ordinal() >= Card.CHAT.ordinal()) {
             String clientName = mapClientId(clientId);
             chatPanel.addText(String.format("%s: %s", clientName, message));
+
+
         }
     }
 
