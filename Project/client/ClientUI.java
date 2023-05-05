@@ -29,7 +29,10 @@ import Project.client.views.GamePanel;
 import Project.client.views.Menu;
 import Project.client.views.RoomsPanel;
 import Project.client.views.UserInputPanel;
+import Project.client.views.UserListPanel;
 import Project.common.Constants;
+import Project.common.Payload;
+import Project.common.PayloadType;
 
 public class ClientUI extends JFrame implements IClientEvents, ICardControls {
     CardLayout card = null;// accessible so we can call next() and previous()
@@ -224,6 +227,7 @@ public class ClientUI extends JFrame implements IClientEvents, ICardControls {
             logger.info("No can do");
         }
     }
+
     @Override
     public void onClientConnect(long clientId, String clientName, String message) {
         if (currentCard.ordinal() >= Card.CHAT.ordinal()) {

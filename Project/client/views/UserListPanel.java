@@ -1,7 +1,7 @@
 package Project.client.views;
 
 import java.awt.BorderLayout;
-
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ContainerEvent;
@@ -14,7 +14,11 @@ import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
+import Project.server.ServerThread;
 import Project.client.ClientUtils;
 import Project.client.ICardControls;
 
@@ -76,13 +80,14 @@ public class UserListPanel extends JPanel {
         userListArea.revalidate();
         userListArea.repaint();
     }
-
+    
     protected void addUserListItem(long clientId, String clientName) {
         logger.log(Level.INFO, "Adding user to list: " + clientName);
         JPanel content = userListArea;
         logger.log(Level.INFO, "Userlist: " + content.getSize());
-        JEditorPane textContainer = new JEditorPane("text/plain", clientName);
+        JEditorPane textContainer = new JEditorPane("text/html", clientName);
         textContainer.setName(clientId + "");
+        
         // sizes the panel to attempt to take up the width of the container
         // and expand in height based on word wrapping
         textContainer.setLayout(null);
@@ -112,6 +117,22 @@ public class UserListPanel extends JPanel {
         Component[] cs = userListArea.getComponents();
         for (Component c : cs) {
             userListArea.remove(c);
+        }
+    }
+    
+    public void setMuted(String clientId, boolean isMuted) {
+        for (Component comp : this.getComponents()) {
+            if (comp instanceof JEditorPane) {
+                JEditorPane editorPane = (JEditorPane) comp;
+                String name = editorPane.getName();
+                if (clientId.equals(name)) {
+                    if (isMuted) {
+                        editorPane.setForeground(Color.GRAY);
+                    } else {
+                        editorPane.setForeground(Color.BLACK);
+                    }
+                }
+            }
         }
     }
 }

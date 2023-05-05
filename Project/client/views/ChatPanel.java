@@ -254,4 +254,8 @@ public class ChatPanel extends JPanel {
         JScrollBar vertical = ((JScrollPane) chatArea.getParent().getParent()).getVerticalScrollBar();
         vertical.setValue(vertical.getMaximum());
     }
+
+    public void setMuted(String clientId, boolean isMuted) {
+        userListPanel.setMuted(clientId, isMuted);
+    }
 }

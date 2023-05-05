@@ -9,7 +9,6 @@ public interface IClientEvents {
      * @param message
      */
     void onClientConnect(long id, String clientName, String message);
-
     /**
      * Triggered when a client disconnects
      * 

@@ -134,7 +134,7 @@ public enum Server {
             }
             logger.info(String.format("Client %s joining new room %s", client.getClientName(), newRoom.getName()));
             newRoom.addClient(client);
-            client.loadMuteList(); //gbj3 IT114
+            client.loadMuteList(); //gbj3
             return true;
         }
         return false;

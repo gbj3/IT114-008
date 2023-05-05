@@ -68,7 +68,7 @@ public class ServerThread extends Thread {
         return mutedClients.contains(name);
       } 
 
-   // overwrites client's mutedClients gbj3 IT114
+   // overwrites client's mutedClients gbj3
    void saveMuteList() {
         String data = clientName + ": " + String.join(", ", mutedClients);
         try {

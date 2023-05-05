@@ -3,7 +3,7 @@
     
   </head>
   <body>
-    *gabe *gabe Joined the room lobby**
+    *user1 *user1 Joined the room lobby**
   </body>
 </html>
 <html>
@@ -11,7 +11,7 @@
     
   </head>
   <body>
-    *brian *brian Joined the room lobby**
+    *user2 *user2 Joined the room lobby**
   </body>
 </html>
 <html>
@@ -19,7 +19,7 @@
     
   </head>
   <body>
-    *john *john Joined the room lobby**
+    *user3 *user3 Joined the room lobby**
   </body>
 </html>
 <html>
@@ -27,7 +27,7 @@
     
   </head>
   <body>
-    gabe: HEY
+    *user1 *user1 Joined the room 2**
   </body>
 </html>
 <html>
@@ -35,7 +35,7 @@
     
   </head>
   <body>
-    *gabe *gabe Joined the room 2**
+    user1: hey
   </body>
 </html>
 <html>
@@ -43,7 +43,7 @@
     
   </head>
   <body>
-    gabe: hey
+    *user2 *user2 Joined the room 2**
   </body>
 </html>
 <html>
@@ -51,7 +51,7 @@
     
   </head>
   <body>
-    *brian *brian Joined the room 2**
+    *user2 *user2 Left the room 2**
   </body>
 </html>
 <html>
@@ -59,7 +59,7 @@
     
   </head>
   <body>
-    *brian *brian Left the room 2**
+    *user1 *user1 Joined the room lobby**
   </body>
 </html>
 <html>
@@ -67,7 +67,7 @@
     
   </head>
   <body>
-    *gabe *gabe Joined the room lobby**
+    user1: hey
   </body>
 </html>
 <html>
@@ -75,7 +75,7 @@
     
   </head>
   <body>
-    gabe: <b>hey</b>
+    user1: <b>flipped heads</b>
   </body>
 </html>
 <html>
@@ -83,7 +83,7 @@
     
   </head>
   <body>
-    gabe: <b>rolled 2</b>
+    user1: <b>rolled 3</b>
   </body>
 </html>
 <html>
@@ -91,7 +91,7 @@
     
   </head>
   <body>
-    gabe: <b>rolled 10</b>
+    user1: <b>rolled 9</b>
   </body>
 </html>
 <html>
@@ -99,6 +99,78 @@
     
   </head>
   <body>
-    gabe: <b>flipped heads</b>
+    user1: <b>hey this is my message</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey this is <i>italics</i>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey this is <u>underline</u>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <font color="red">red</font> <font color="green">green</font> <font color="blue">blue</font>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <font color="red"><b><i><u>message</u></i></b></font>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: ds
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: i hit send button
   </body>
 </html>
