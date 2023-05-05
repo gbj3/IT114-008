@@ -1,0 +1,176 @@
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user1 *user1 Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user2 *user2 Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user3 *user3 Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user1 *user1 Joined the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user2 *user2 Joined the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user2 *user2 Left the room 2**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    *user1 *user1 Joined the room lobby**
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <b>flipped heads</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <b>rolled 3</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <b>rolled 9</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <b>hey this is my message</b>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey this is <i>italics</i>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: hey this is <u>underline</u>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <font color="red">red</font> <font color="green">green</font> <font color="blue">blue</font>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: <font color="red"><b><i><u>message</u></i></b></font>
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: ds
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: s
+  </body>
+</html>
+<html>
+  <head>
+    
+  </head>
+  <body>
+    user1: i hit send button
+  </body>
+</html>

@@ -40,6 +40,14 @@ public class Payload implements Serializable {
     public void setClientId(long clientId) {
         this.clientId = clientId;
     }
+    
+    private boolean flag;
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+    public boolean getFlag() {
+        return flag;
+    }
 
     /**
      * Generic text based message

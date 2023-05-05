@@ -1,5 +1,9 @@
 package Project.server;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,7 +11,9 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import Project.common.Constants;
 import Project.common.Payload;
@@ -35,25 +41,80 @@ public class ServerThread extends Thread {
     public List<String> getMutedClients() {
         return this.mutedClients;
     }
-
+    //mutes clients
     public void mute(String name) {
         name = name.trim().toLowerCase();
         if (!isMuted(name)) {
             mutedClients.add(name);
+            saveMuteList();
+            syncIsMuted(name, true);
         }
     }
 
-    public void unmute(String name) {
-        name = name.trim().toLowerCase();
-        if(isMuted(name)) {
+    //unmutes clients
+     public void unmute(String name) {
+         name = name.trim().toLowerCase();
+        if (isMuted(name)) {
             mutedClients.remove(name);
+            saveMuteList();
+            syncIsMuted(name, false);
         }
+
     }
 
-    public boolean isMuted(String name) {
+     //checks if client is muted
+   public boolean isMuted(String name) {
         name = name.trim().toLowerCase();
         return mutedClients.contains(name);
-    }
+      } 
+
+   // overwrites client's mutedClients gbj3
+   void saveMuteList() {
+        String data = clientName + ": " + String.join(", ", mutedClients);
+        try {
+             FileWriter export = new FileWriter(clientName + ".txt");
+             BufferedWriter bw = new BufferedWriter(export);
+            bw.write("" + data);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+   }
+// loads client's mutedClients
+  void loadMuteList() {
+           File file = new File(clientName + ".txt");
+           if (file.exists()) {
+               try (Scanner reader = new Scanner(file)) {
+                  String dataFromFile = "";
+                  while (reader.hasNextLine()) {
+                       String text = reader.nextLine();
+                       dataFromFile += text;
+                  }
+                  dataFromFile = dataFromFile.substring(dataFromFile.indexOf(" ")+1);;
+                  if (!dataFromFile.strip().equals("") && !dataFromFile.isEmpty()) {
+                      List<String> getClients = Arrays.asList(dataFromFile.split(", "));
+                      for (String client : getClients) {
+                          mute(client);
+                      }
+                  }
+               }
+              catch (FileNotFoundException e) {
+               e.printStackTrace();
+           } catch (Exception e2) {
+               e2.printStackTrace();
+           }
+           }
+           System.out.println(mutedClients.toString());
+   }
+
+  // sends client mute or unmute
+      protected boolean syncIsMuted(String clientName, boolean isMuted) {
+       Payload p = new Payload();
+       p.setPayloadType(PayloadType.MUTE);
+       p.setClientName(clientName);
+       p.setFlag(isMuted);
+       return send(p);
+   }
 
     public void setClientId(long id) {
         myClientId = id;
